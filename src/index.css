@@ -1,0 +1,260 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cyber-bg: #050a14;
+  --color-cyber-surface: #0a1628;
+  --color-cyber-border: #1a3a5c;
+  --color-cyber-blue: #00d4ff;
+  --color-cyber-blue-dim: #0088aa;
+  --color-cyber-green: #00ff88;
+  --color-cyber-red: #ff3366;
+  --color-cyber-orange: #ff8800;
+  --color-cyber-purple: #8844ff;
+  --font-mono: "Courier New", "Courier", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #050a14;
+  color: #e0f4ff;
+  font-family: "Courier New", "Courier", monospace;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── Scan line overlay ── */
+.scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 212, 255, 0.015) 2px,
+    rgba(0, 212, 255, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  animation: scanMove 8s linear infinite;
+}
+
+@keyframes scanMove {
+  from { background-position: 0 0; }
+  to { background-position: 0 100px; }
+}
+
+/* ── Grid bg ── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Glow effects ── */
+.glow-blue {
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.3), 0 0 30px rgba(0, 212, 255, 0.1);
+}
+
+.glow-green {
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3), 0 0 30px rgba(0, 255, 136, 0.1);
+}
+
+.glow-red {
+  box-shadow: 0 0 15px rgba(255, 51, 102, 0.4), 0 0 30px rgba(255, 51, 102, 0.15);
+}
+
+.text-glow-blue {
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.8), 0 0 20px rgba(0, 212, 255, 0.4);
+}
+
+.text-glow-green {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+}
+
+/* ── Blink ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.blink {
+  animation: blink 1s step-start infinite;
+}
+
+/* ── Pulse ring ── */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); }
+  70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(0, 212, 255, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 212, 255, 0); }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2s infinite;
+}
+
+/* ── Scanning line animation ── */
+@keyframes scanLine {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00d4ff, #00ff88, #00d4ff, transparent);
+  animation: scanLine 2s linear infinite;
+  box-shadow: 0 0 8px #00d4ff;
+}
+
+/* ── Particle float ── */
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 0.7; }
+  100% { transform: translateY(-80px) scale(0.3); opacity: 0; }
+}
+
+.particle {
+  animation: floatUp 3s ease-in infinite;
+}
+
+/* ── Corner brackets ── */
+.corner-bracket {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+}
+.corner-bracket::before,
+.corner-bracket::after {
+  content: "";
+  position: absolute;
+  background: #00d4ff;
+  box-shadow: 0 0 6px #00d4ff;
+}
+.corner-tl::before { top: 0; left: 0; width: 100%; height: 2px; }
+.corner-tl::after  { top: 0; left: 0; width: 2px; height: 100%; }
+.corner-tr::before { top: 0; right: 0; width: 100%; height: 2px; }
+.corner-tr::after  { top: 0; right: 0; width: 2px; height: 100%; }
+.corner-bl::before { bottom: 0; left: 0; width: 100%; height: 2px; }
+.corner-bl::after  { bottom: 0; left: 0; width: 2px; height: 100%; }
+.corner-br::before { bottom: 0; right: 0; width: 100%; height: 2px; }
+.corner-br::after  { bottom: 0; right: 0; width: 2px; height: 100%; }
+
+/* ── Count up ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+/* ── Orb waveform ── */
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes orbSpeak {
+  0%   { transform: scale(1);    }
+  25%  { transform: scale(1.2);  }
+  50%  { transform: scale(0.95); }
+  75%  { transform: scale(1.25); }
+  100% { transform: scale(1);    }
+}
+
+.orb-idle {
+  animation: orbPulse 3s ease-in-out infinite;
+}
+
+.orb-speaking {
+  animation: orbSpeak 0.4s ease-in-out infinite;
+}
+
+/* ── Progress bar shimmer ── */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.progress-shimmer {
+  background: linear-gradient(90deg, #00d4ff 0%, #00ff88 50%, #00d4ff 100%);
+  background-size: 200% auto;
+  animation: shimmer 2s linear infinite;
+}
+
+/* ── Screen transitions ── */
+.screen-enter {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0a1628; }
+::-webkit-scrollbar-thumb { background: #1a3a5c; border-radius: 2px; }
+
+/* ══════════════════════════════════════════════════
+   PROGRESSIVE REVEAL ANIMATIONS
+   ══════════════════════════════════════════════════ */
+
+/* Glitch unlock — plays once when a stat is revealed */
+@keyframes glitchUnlock {
+  0%   { opacity: 0.15; transform: translateX(-5px) skewX(-4deg); filter: blur(3px) brightness(4); }
+  12%  { opacity: 0.6;  transform: translateX(4px)  skewX(2deg);  filter: brightness(2.5); }
+  28%  { opacity: 0.35; transform: translateX(-3px); filter: blur(1.5px) brightness(1.8); }
+  45%  { opacity: 0.8;  transform: translateX(2px)  skewX(-1deg); filter: brightness(1.4); }
+  62%  { opacity: 0.9;  transform: translateX(-1px); filter: brightness(1.1); }
+  80%  { opacity: 0.97; transform: translateX(0.5px); filter: none; }
+  100% { opacity: 1;    transform: translateX(0) skewX(0); filter: none; }
+}
+.glitch-unlock {
+  animation: glitchUnlock 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Scanning pulse — loops on active-locked stats while voice is announcing */
+@keyframes scanBlink {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 1; }
+}
+.scan-blink {
+  animation: scanBlink 0.75s ease-in-out infinite;
+}
+
+/* Classified dim flicker — idle locked state */
+@keyframes classifiedFlicker {
+  0%, 92%, 100% { opacity: 0.22; }
+  46%           { opacity: 0.18; }
+  94%           { opacity: 0.28; }
+}
+.classified-flicker {
+  animation: classifiedFlicker 4s ease-in-out infinite;
+}
+
+/* Lock icon subtle pulse */
+@keyframes lockPulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50%       { transform: scale(1.06); opacity: 0.5; }
+}
+.lock-pulse {
+  animation: lockPulse 2.5s ease-in-out infinite;
+}
+
+/* Score big reveal */
+@keyframes scorePop {
+  0%   { transform: scale(0.6); opacity: 0; filter: blur(6px); }
+  60%  { transform: scale(1.08); filter: blur(0); }
+  80%  { transform: scale(0.97); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.score-pop {
+  animation: scorePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
