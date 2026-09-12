@@ -1,0 +1,1 @@
+# people-critique-ai-hackathon
